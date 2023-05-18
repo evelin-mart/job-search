@@ -1,14 +1,8 @@
-import React from 'react';
 import { Navigate, Outlet, Route, Routes } from 'react-router';
 import { BrowserRouter } from 'react-router-dom';
 import { PageLayout } from '../layout';
 import { FavoritesPage, MainPage, VacancyPage } from '../../pages';
-
-enum ROUTES {
-    HOME = '/',
-    FAVORITE = '/favorite',
-    VACANCY = '/:id',
-}
+import { ROUTES } from '../../constants';
 
 export const RootRouter = () => {
     return (
