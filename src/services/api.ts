@@ -1,4 +1,5 @@
 import axios, { AxiosInstance } from 'axios';
+import { ResponseType } from '../types';
 
 export interface RequestOpt {
     [x: string]: string | number;
@@ -66,7 +67,7 @@ export class Loader {
             );
         }
 
-        const vacancies = await this.instance.get(this.makeUrl('vacancies', options));
+        const vacancies = await this.instance.get<ResponseType>(this.makeUrl('vacancies', options));
         if (vacancies.status === 200) {
             return vacancies.data;
         } else {

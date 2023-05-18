@@ -1,5 +1,7 @@
 import { createAsyncThunk, createReducer } from '@reduxjs/toolkit';
-import { AppStateType, SearchParamsType } from './types';
+import { AppStateType, AsyncThunkConfig, SearchParamsType } from './types';
+import { Loader } from '../services';
+import { ResponseType } from '../types';
 
 const initialParams: SearchParamsType = {
     keyword: '',
@@ -14,10 +16,17 @@ const initialState: AppStateType = {
     },
     vacancies: [],
     isLoading: false,
+    loader: new Loader(),
 };
 
-export const getVacancies = createAsyncThunk('getVacancies', async () => {
-    return {};
+export const getVacancies = createAsyncThunk<
+    ResponseType,
+    Partial<SearchParamsType>,
+    AsyncThunkConfig
+>('getVacancies', async (options, { getState }) => {
+    const { loader, searchParams } = getState();
+    const data = await loader.getVacancies({ ...searchParams, ...options });
+    return data;
 });
 
 export const appReducer = createReducer(initialState, (builder) => {
@@ -25,8 +34,9 @@ export const appReducer = createReducer(initialState, (builder) => {
         .addCase(getVacancies.pending, (state) => {
             state.isLoading = true;
         })
-        .addCase(getVacancies.fulfilled, (state) => {
+        .addCase(getVacancies.fulfilled, (state, action) => {
             state.isLoading = false;
+            state.vacancies = action.payload.objects;
         })
         .addCase(getVacancies.rejected, (state) => {
             state.isLoading = false;

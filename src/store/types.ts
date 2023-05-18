@@ -1,3 +1,6 @@
+import { Loader } from '../services';
+import { Vacancy } from '../types';
+
 export interface SearchParamsType {
     keyword: string;
     payment_from: number;
@@ -7,6 +10,11 @@ export interface SearchParamsType {
 
 export interface AppStateType {
     searchParams: SearchParamsType;
-    vacancies: [];
+    vacancies: Vacancy[];
     isLoading: boolean;
+    loader: Loader;
+}
+
+export interface AsyncThunkConfig {
+    state: AppStateType;
 }
