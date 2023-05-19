@@ -1,4 +1,4 @@
-import { createAsyncThunk, createReducer } from '@reduxjs/toolkit';
+import { createAction, createAsyncThunk, createReducer } from '@reduxjs/toolkit';
 import { AppStateType, AsyncThunkConfig, SearchParamsType } from './types';
 import { Loader } from '../services';
 import { ResponseType } from '../types';
@@ -23,14 +23,23 @@ export const getVacancies = createAsyncThunk<
     ResponseType,
     Partial<SearchParamsType>,
     AsyncThunkConfig
->('getVacancies', async (options, { getState }) => {
+>('getVacancies', async (options, { getState, dispatch }) => {
+    dispatch(setSearchParams(options));
     const { loader, searchParams } = getState();
     const data = await loader.getVacancies({ ...searchParams, ...options });
     return data;
 });
 
+export const setSearchParams = createAction<Partial<SearchParamsType>>('setSearchParams');
+
 export const appReducer = createReducer(initialState, (builder) => {
     builder
+        .addCase(setSearchParams, (state, action) => {
+            state.searchParams = {
+                ...state.searchParams,
+                ...action.payload,
+            };
+        })
         .addCase(getVacancies.pending, (state) => {
             state.isLoading = true;
         })

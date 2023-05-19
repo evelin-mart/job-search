@@ -10,7 +10,7 @@ export const PageLayout = ({ children }: Props) => {
     return (
         <>
             <AppHeader />
-            <Box sx={{ flexGrow: 1, backgroundColor: '#F7F7F8' }}>
+            <Box sx={{ flexGrow: 1, backgroundColor: '#F7F7F8' }} p={{ base: 12, sm: 24 }}>
                 <Container maw={1116} p={0}>
                     {children}
                 </Container>
