@@ -12,13 +12,11 @@ export const VacancyPage = () => {
     }
 
     return (
-        <Box sx={{ flexBasis: 773 }}>
-            <Flex direction="column" gap={20}>
-                <VacancyShort vacancy={vacancy} />
-                <Paper radius={12} p={24}>
-                    <Box dangerouslySetInnerHTML={{ __html: vacancy.text }} />
-                </Paper>
-            </Flex>
-        </Box>
+        <Flex direction="column" gap={20} m="auto" maw={773}>
+            <VacancyShort vacancy={vacancy} />
+            <Paper radius={12} p={24}>
+                <Box dangerouslySetInnerHTML={{ __html: vacancy.text }} />
+            </Paper>
+        </Flex>
     );
 };
