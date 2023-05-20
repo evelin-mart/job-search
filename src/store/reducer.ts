@@ -2,6 +2,7 @@ import { createAction, createAsyncThunk, createReducer } from '@reduxjs/toolkit'
 import { AppStateType, AsyncThunkConfig, SearchParamsType } from './types';
 import { Loader } from '../services';
 import { ResponseType } from '../types';
+import { removeEmptyFields } from './utils';
 
 const initialParams: SearchParamsType = {
     keyword: '',
@@ -23,11 +24,16 @@ export const getVacancies = createAsyncThunk<
     ResponseType,
     Partial<SearchParamsType>,
     AsyncThunkConfig
->('getVacancies', async (options, { getState, dispatch }) => {
+>('getVacancies', async (options, { getState, dispatch, rejectWithValue }) => {
     dispatch(setSearchParams(options));
     const { loader, searchParams } = getState();
-    const data = await loader.getVacancies({ ...searchParams, ...options });
-    return data;
+    const params = removeEmptyFields({ ...searchParams, ...options });
+    try {
+        const data = await loader.getVacancies(params);
+        return data;
+    } catch (e) {
+        rejectWithValue(e);
+    }
 });
 
 export const setSearchParams = createAction<Partial<SearchParamsType>>('setSearchParams');

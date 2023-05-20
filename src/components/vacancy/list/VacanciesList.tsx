@@ -1,22 +1,16 @@
-import { useEffect } from 'react';
-import { Flex } from '@mantine/core';
-import { useAppDispatch, useAppSelector } from '../../../store';
+import { Vacancy } from '../../../types';
 import { VacancyShort } from '../short';
-import { getVacancies } from '../../../store/reducer';
 
-export const VacanciesList = () => {
-    const { vacancies, loader } = useAppSelector();
-    const dispatch = useAppDispatch();
+type Props = {
+    vacancies: Vacancy[];
+};
 
-    useEffect(() => {
-        loader.init().then(() => dispatch(getVacancies({})));
-    }, []);
-
+export const VacanciesList = ({ vacancies }: Props) => {
     return (
-        <Flex direction="column" gap={16} align="stretch" sx={{ flex: '1 0 50%' }}>
+        <>
             {vacancies.map((vacancy) => (
-                <VacancyShort key={vacancy.id} vacancy={vacancy} />
+                <VacancyShort key={vacancy.id} vacancy={vacancy} short />
             ))}
-        </Flex>
+        </>
     );
 };
