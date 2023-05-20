@@ -6,11 +6,13 @@ export interface SearchParamsType {
     payment_from: number;
     payment_to: number;
     catalogues: number;
+    page: number;
 }
 
 export interface AppStateType {
     searchParams: SearchParamsType;
     vacancies: Vacancy[];
+    favorites: Vacancy[];
     isLoading: boolean;
     loader: Loader;
 }

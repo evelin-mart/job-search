@@ -1,6 +1,5 @@
 import { Group, Text, Box } from '@mantine/core';
 import { Vacancy } from '../../../types';
-import { createPayString } from '../../../utils';
 
 type Props = {
     size: number;
@@ -8,14 +7,15 @@ type Props = {
 };
 
 export const Conditions = ({ size, vacancy }: Props) => {
+    const { pay, type } = vacancy;
     return (
         <Group spacing={12}>
-            <Text fz={size} fw="bold" lh='20px'>
-                {createPayString(vacancy)}
+            <Text fz={size} fw="bold" lh="20px">
+                {pay}
             </Text>
             <Box sx={{ width: 5, height: 5, borderRadius: '50%', backgroundColor: '#7B7C88' }} />
             <Text fz={size} lh="20px">
-                {vacancy.type_of_work.title}
+                {type}
             </Text>
         </Group>
     );

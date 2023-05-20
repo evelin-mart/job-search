@@ -1,5 +1,5 @@
 import axios, { AxiosInstance } from 'axios';
-import { ResponseType } from '../types';
+import { VacancyFull } from '../types';
 import data from './mock.json';
 
 export interface RequestOpt {
@@ -10,6 +10,10 @@ export interface AuthAnswer {
     access_token: string;
     refresh_token: string;
     ttl: number;
+}
+
+export interface ResponseType {
+    objects: VacancyFull[];
 }
 
 export class Loader {
@@ -64,7 +68,7 @@ export class Loader {
         // );
     }
 
-    public async getVacancies(options: RequestOpt) {
+    public async getVacancies(options: RequestOpt): Promise<VacancyFull[]> {
         // if (this.accessToken.ttl <= Date.now()) {
         //     this.getAuthData(
         //         this.makeUrl('oauth2/refresh_token', {
@@ -83,10 +87,10 @@ export class Loader {
         //     },
         // );
         // if (vacancies.status === 200) {
-        //     return vacancies.data;
+        //     return vacancies.data.objects;
         // } else {
         //     throw new Error(vacancies.statusText);
         // }
-        return data;
+        return data.objects as VacancyFull[];
     }
 }

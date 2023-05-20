@@ -1,4 +1,4 @@
-import { Vacancy } from '../types';
+import { Vacancy, VacancyFull } from '../types';
 
 export const createLocationString = (str: string | null) => {
     if (!str) {
@@ -8,7 +8,7 @@ export const createLocationString = (str: string | null) => {
     return str.split(',')[0];
 };
 
-export const createPayString = ({ payment_from, payment_to, currency }: Vacancy) => {
+export const createPayString = ({ payment_from, payment_to, currency }: VacancyFull) => {
     if (!payment_from && !payment_to) {
         return 'з/п не указана';
     }
@@ -19,4 +19,18 @@ export const createPayString = ({ payment_from, payment_to, currency }: Vacancy)
         return `з/п ${payment_to} ${currency}`;
     }
     return `з/п ${payment_from}-${payment_to} ${currency}`;
+};
+
+export const trimVacancies = (vacancies: VacancyFull[], fav: Vacancy[]): Vacancy[] => {
+    const ids = fav.map((f) => f.id);
+
+    return vacancies.map((v) => ({
+        id: v.id,
+        profession: v.profession,
+        pay: createPayString(v),
+        type: v.type_of_work.title,
+        address: createLocationString(v.address),
+        text: v.vacancyRichText,
+        favorite: ids.includes(v.id),
+    }));
 };

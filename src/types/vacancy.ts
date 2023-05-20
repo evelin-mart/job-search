@@ -1,4 +1,4 @@
-export interface Vacancy {
+export interface VacancyFull {
     id: number;
     profession: string;
     currency: string;
@@ -9,4 +9,14 @@ export interface Vacancy {
         title: string;
     };
     vacancyRichText: string;
+}
+
+export interface Vacancy {
+    id: number;
+    profession: string;
+    pay: string;
+    type: string;
+    address: string;
+    text: string;
+    favorite: boolean;
 }

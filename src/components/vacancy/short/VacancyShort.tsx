@@ -4,7 +4,8 @@ import { Location } from '../location';
 import { Vacancy } from '../../../types';
 import { ReactComponent as Star } from '../../../assets/Star.svg';
 import { useNavigate } from 'react-router';
-import { useCallback } from 'react';
+import { MouseEventHandler, useCallback } from 'react';
+import { addFavorite, removeFavorite, useAppDispatch } from '../../../store';
 
 type Props = {
     vacancy: Vacancy;
@@ -12,11 +13,26 @@ type Props = {
 };
 
 export const VacancyShort = ({ vacancy, short }: Props) => {
-    const { profession, address, id } = vacancy;
+    const { profession, address, id, favorite } = vacancy;
     const navigate = useNavigate();
+    const dispatch = useAppDispatch();
     const openFullInfo = useCallback(() => {
         navigate(`/vacancies/${id}`);
     }, [navigate, id]);
+    const addToFavorites: MouseEventHandler<SVGSVGElement> = useCallback(
+        (e) => {
+            e.stopPropagation();
+            dispatch(addFavorite(vacancy));
+        },
+        [dispatch, vacancy],
+    );
+    const removeFromFavorites: MouseEventHandler<SVGSVGElement> = useCallback(
+        (e) => {
+            e.stopPropagation();
+            dispatch(removeFavorite(id));
+        },
+        [dispatch, id],
+    );
 
     return (
         <Paper radius={12} p={24} onClick={short ? openFullInfo : undefined}>
@@ -29,7 +45,10 @@ export const VacancyShort = ({ vacancy, short }: Props) => {
                     <Location address={address} />
                 </Flex>
                 <Box>
-                    <Star />
+                    <Star
+                        fill={favorite ? 'blue' : 'none'}
+                        onClick={favorite ? removeFromFavorites : addToFavorites}
+                    />
                 </Box>
             </Flex>
         </Paper>

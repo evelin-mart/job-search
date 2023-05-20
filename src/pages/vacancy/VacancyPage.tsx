@@ -16,7 +16,7 @@ export const VacancyPage = () => {
             <Flex direction="column" gap={20}>
                 <VacancyShort vacancy={vacancy} />
                 <Paper radius={12} p={24}>
-                    <Box dangerouslySetInnerHTML={{ __html: vacancy.vacancyRichText }} />
+                    <Box dangerouslySetInnerHTML={{ __html: vacancy.text }} />
                 </Paper>
             </Flex>
         </Box>
