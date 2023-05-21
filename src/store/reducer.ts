@@ -9,8 +9,7 @@ const initialParams: SearchParamsType = {
     keyword: '',
     payment_from: 0,
     payment_to: 0,
-    catalogues: 33,
-    page: 0,
+    catalogues: '',
 };
 
 const initialState: AppStateType = {

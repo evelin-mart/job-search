@@ -5,8 +5,7 @@ export interface SearchParamsType {
     keyword: string;
     payment_from: number;
     payment_to: number;
-    catalogues: number;
-    page: number;
+    catalogues: string;
 }
 
 export interface AppStateType {
