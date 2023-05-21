@@ -14,31 +14,36 @@ import {
 import { ReactComponent as Down } from '../../assets/Down.svg';
 import { ReactComponent as Close } from '../../assets/Close.svg';
 import { FormEventHandler, useCallback } from 'react';
-import { getVacancies, useAppDispatch } from '../../store';
+import { getVacancies, useAppDispatch, useAppSelector } from '../../store';
 import { catalogues } from '../../constants';
+import { usePagination } from '../../hooks';
 
 type FormState = Omit<SearchParamsType, 'keyword'>;
 
-const initialValues = {
-    payment_from: 0,
-    payment_to: 0,
+const initialValues: Partial<SearchParamsType> = {
+    payment_from: '',
+    payment_to: '',
     catalogues: '',
 };
 
 export const Filters = () => {
-    const form = useForm<FormState>();
+    const { isLoading, searchParams } = useAppSelector();
+    const form = useForm<FormState>({ initialValues: { ...searchParams } });
     const dispatch = useAppDispatch();
+    const { handleSetPage } = usePagination([]);
     const onSubmit: FormEventHandler<HTMLFormElement> = useCallback(
         (e) => {
             e.preventDefault();
             dispatch(getVacancies(form.values));
+            handleSetPage(1);
         },
-        [dispatch, form.values],
+        [dispatch, form.values, handleSetPage],
     );
     const resetFilters = useCallback(() => {
-        form.setValues(initialValues);
+        form.reset();
         dispatch(getVacancies(initialValues));
-    }, [dispatch, form]);
+        handleSetPage(1);
+    }, [dispatch, form, handleSetPage]);
 
     return (
         <Paper p={20} radius={12} sx={{ flex: '0 0 315px' }}>
@@ -46,7 +51,7 @@ export const Filters = () => {
                 <Title order={3} fz={20} lh={1}>
                     Фильтры
                 </Title>
-                <UnstyledButton onClick={resetFilters} type="reset">
+                <UnstyledButton onClick={resetFilters} type="reset" disabled={isLoading}>
                     <Group spacing={4} align="flex-end">
                         <Text fz="sm" lh="20px">
                             Сбросить все
@@ -94,7 +99,7 @@ export const Filters = () => {
                             {...form.getInputProps('payment_to')}
                         />
                     </Flex>
-                    <Button type="submit" radius={8} size='md'>
+                    <Button type="submit" radius={8} size="md" disabled={isLoading}>
                         Применить
                     </Button>
                 </Flex>

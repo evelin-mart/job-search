@@ -34,5 +34,9 @@ export const usePagination = (vacancies: Vacancy[]) => {
     const list = vacancies.slice(start, end);
     const total = Math.ceil(vacancies.length / vacanciesPerPage);
 
+    if (!list.length && page > 1) {
+        setPage(page - 1);
+    }
+
     return { list, total, page, handleSetPage };
 };

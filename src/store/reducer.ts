@@ -7,8 +7,8 @@ import { getFavoritesFromLocalStorage, trimVacancies } from '../utils';
 
 const initialParams: SearchParamsType = {
     keyword: '',
-    payment_from: 0,
-    payment_to: 0,
+    payment_from: '',
+    payment_to: '',
     catalogues: '',
 };
 
@@ -19,8 +19,9 @@ const initialState: AppStateType = {
     vacancies: [],
     favorites: getFavoritesFromLocalStorage(),
     isLoading: false,
-    loader: new Loader(),
 };
+
+export const loader = new Loader();
 
 export const getVacancies = createAsyncThunk<
     Vacancy[],
@@ -28,7 +29,7 @@ export const getVacancies = createAsyncThunk<
     AsyncThunkConfig
 >('getVacancies', async (options, { getState, dispatch, rejectWithValue }) => {
     dispatch(setSearchParams(options));
-    const { loader, searchParams, favorites } = getState();
+    const { searchParams, favorites } = getState();
     const params = removeEmptyFields({ ...searchParams, ...options });
     try {
         const data = await loader.getVacancies(params);
