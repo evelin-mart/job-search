@@ -5,6 +5,7 @@ export interface SearchParamsType {
     payment_from: number | '';
     payment_to: number | '';
     catalogues: string;
+    published: 1;
 }
 
 export interface AppStateType {

@@ -10,6 +10,7 @@ const initialParams: SearchParamsType = {
     payment_from: '',
     payment_to: '',
     catalogues: '',
+    published: 1,
 };
 
 const initialState: AppStateType = {
@@ -36,7 +37,7 @@ export const getVacancies = createAsyncThunk<
         const vacancies = trimVacancies(data, favorites);
         return vacancies;
     } catch (e) {
-        rejectWithValue(e as Error);
+        rejectWithValue(e);
     }
     return [];
 });

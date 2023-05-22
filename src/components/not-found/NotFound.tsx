@@ -13,6 +13,7 @@ export const NotFound = ({ children }: Props) => {
             align="center"
             gap={{ base: 16, sm: 32 }}
             pt={{ base: 60, sm: 120 }}
+            pb={{ base: 60, sm: 120 }}
         >
             <Image src={not_found} alt="Not Found" maw={{ base: 180, sm: 240 }} />
             {children}

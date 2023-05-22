@@ -4,8 +4,7 @@ export const createLocationString = (str: string | null) => {
     if (!str) {
         return 'не указано';
     }
-
-    return str.split(',')[0];
+    return str;
 };
 
 export const createPayString = ({ payment_from, payment_to, currency }: VacancyFull) => {
@@ -29,7 +28,7 @@ export const trimVacancies = (vacancies: VacancyFull[], fav: Vacancy[]): Vacancy
         profession: v.profession,
         pay: createPayString(v),
         type: v.type_of_work.title,
-        address: createLocationString(v.address),
+        address: createLocationString(v.town.title),
         text: v.vacancyRichText,
         favorite: ids.includes(v.id),
     }));

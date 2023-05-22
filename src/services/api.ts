@@ -1,19 +1,26 @@
-import axios, { AxiosInstance } from 'axios';
+import axios, { AxiosError, AxiosInstance } from 'axios';
 import { VacancyFull } from '../types';
 import data from './mock.json';
 
-export interface RequestOpt {
+interface RequestOpt {
     [x: string]: string | number;
 }
 
-export interface AuthAnswer {
+interface AuthAnswer {
     access_token: string;
     refresh_token: string;
     ttl: number;
 }
 
-export interface ResponseType {
+interface ResponseType {
     objects: VacancyFull[];
+}
+
+interface ErrorData {
+    error: {
+        code: number;
+        message: string;
+    };
 }
 
 export class Loader {
@@ -55,41 +62,51 @@ export class Loader {
 
     private async getAuthData(url: string) {
         const authData = await this.instance.get<AuthAnswer>(url);
-        if (authData.status === 200) {
-            this.accessToken = authData.data;
-        } else {
-            throw new Error(authData.statusText);
-        }
+        this.accessToken = authData.data;
     }
 
-    public async init() {
-        // this.getAuthData(
-        //     this.makeUrl('oauth2/password', { ...this.authOptions, ...this.clientOptions }),
-        // );
+    private async auth() {
+        await this.getAuthData(
+            this.makeUrl('oauth2/password', { ...this.authOptions, ...this.clientOptions }),
+        );
+    }
+
+    private async refresh() {
+        await this.getAuthData(
+            this.makeUrl('oauth2/refresh_token', {
+                refresh_token: this.accessToken.refresh_token,
+                ...this.clientOptions,
+            }),
+        );
     }
 
     public async getVacancies(options: RequestOpt): Promise<VacancyFull[]> {
-        // if (this.accessToken.ttl <= Date.now()) {
-        //     this.getAuthData(
-        //         this.makeUrl('oauth2/refresh_token', {
-        //             refresh_token: this.accessToken.refresh_token,
-        //             ...this.clientOptions,
-        //         }),
-        //     );
-        // }
+        // try {
+        //     if (!this.accessToken.access_token) {
+        //         await this.auth();
+        //     }
 
-        // const vacancies = await this.instance.get<ResponseType>(
-        //     this.makeUrl('vacancies', options),
-        //     {
-        //         headers: {
-        //             'X-Api-App-Id': this.clientOptions.client_secret,
+        //     const response = await this.instance.get<ResponseType>(
+        //         this.makeUrl('vacancies', options),
+        //         {
+        //             headers: {
+        //                 'X-Api-App-Id': this.clientOptions.client_secret,
+        //             },
         //         },
-        //     },
-        // );
-        // if (vacancies.status === 200) {
-        //     return vacancies.data.objects;
-        // } else {
-        //     throw new Error(vacancies.statusText);
+        //     );
+        //     return response.data.objects;
+        // } catch (e: unknown) {
+        //     if (e instanceof AxiosError) {
+        //         const data = e.response?.data as ErrorData;
+        //         if (data.error.code === 410) {
+        //             await this.refresh();
+        //             return await this.getVacancies(options);
+        //         } else {
+        //             throw new Error(e.response?.data.error.message);
+        //         }
+        //     } else {
+        //         throw new Error((e as Error).message);
+        //     }
         // }
         return data.objects as VacancyFull[];
     }

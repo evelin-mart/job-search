@@ -1,0 +1,14 @@
+.link {
+    text-decoration: none;
+    color: black;
+}
+
+.active {
+    color: var(--blue500);
+}
+
+@media (max-width: 767px) {
+    .link {
+        font-size: 20px;
+    }
+}

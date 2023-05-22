@@ -4,7 +4,9 @@ export interface VacancyFull {
     currency: string;
     payment_from: number;
     payment_to: number;
-    address: string;
+    town: {
+        title: string;
+    };
     type_of_work: {
         title: string;
     };

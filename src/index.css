@@ -4,11 +4,24 @@
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     -webkit-text-size-adjust: 100%;
+    --blue600: #5E96FC;
+    --blue500: #5E96FC;
+    --blue400: #92C1FF;
+    --blue300: #B7D6FF;
+    --blue200: #C9E0FF;
+    --blue100: #DEECFF;
+    --grey600: #7B7C88;
+    --grey500: #ACADB9;
+    --grey300: #D5D6DC;
+    --grey200: #EAEBED;
+    --grey100: #F5F5F6;
+    --black: #232134;
 }
 
 body {
     margin: 0;
     min-width: 320px;
+    color: var(--black);
 }
 
 #root {

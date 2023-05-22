@@ -4,14 +4,19 @@ import { useCallback } from 'react';
 import { useNavigate } from 'react-router';
 import { ROUTES } from '../../constants';
 
-export const Logo = () => {
+type Props = {
+    toggleNavbar: () => void;
+};
+
+export const Logo = ({ toggleNavbar }: Props) => {
     const navigate = useNavigate();
     const onClick = useCallback(() => {
         navigate(ROUTES.HOME);
-    }, [navigate]);
+        toggleNavbar();
+    }, [navigate, toggleNavbar]);
 
     return (
-        <Group onClick={onClick}>
+        <Group onClick={onClick} sx={{ cursor: 'pointer' }}>
             <Union />
             <Title order={1} fz="1.5rem" lh="2.25rem">
                 Jobored
