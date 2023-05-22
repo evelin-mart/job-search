@@ -22,6 +22,7 @@ export const SearchForm = () => {
 
     return (
         <TextInput
+            data-elem="search-input"
             icon={<Search />}
             size="md"
             radius="md"
@@ -29,6 +30,7 @@ export const SearchForm = () => {
             onChange={onChange}
             rightSection={
                 <Button
+                    data-elem="search-button"
                     size="sm"
                     radius="md"
                     h={32}

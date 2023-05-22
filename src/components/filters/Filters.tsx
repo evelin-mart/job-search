@@ -67,6 +67,7 @@ export const Filters = () => {
                             Отрасль
                         </Text>
                         <Select
+                            data-elem="industry-select"
                             placeholder="Выберите отрасль"
                             allowDeselect
                             searchable
@@ -83,6 +84,7 @@ export const Filters = () => {
                             Оклад
                         </Text>
                         <NumberInput
+                            data-elem="salary-from-input"
                             placeholder="От"
                             min={0}
                             step={1000}
@@ -91,6 +93,7 @@ export const Filters = () => {
                             {...form.getInputProps('payment_from')}
                         />
                         <NumberInput
+                            data-elem="salary-to-input"
                             placeholder="До"
                             min={0}
                             step={1000}
@@ -99,7 +102,13 @@ export const Filters = () => {
                             {...form.getInputProps('payment_to')}
                         />
                     </Flex>
-                    <Button type="submit" radius={8} size="md" disabled={isLoading}>
+                    <Button
+                        data-elem="search-button"
+                        type="submit"
+                        radius={8}
+                        size="md"
+                        disabled={isLoading}
+                    >
                         Применить
                     </Button>
                 </Flex>

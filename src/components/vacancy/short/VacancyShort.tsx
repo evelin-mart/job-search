@@ -35,7 +35,12 @@ export const VacancyShort = ({ vacancy, short }: Props) => {
     );
 
     return (
-        <Paper radius={12} p={24} onClick={short ? openFullInfo : undefined}>
+        <Paper
+            data-elem={`vacancy-${id}`}
+            radius={12}
+            p={24}
+            onClick={short ? openFullInfo : undefined}
+        >
             <Flex justify="space-between" gap="xs">
                 <Flex direction="column" gap={short ? 12 : 16}>
                     <Title order={3} fz={short ? 20 : 28} lh={1.2}>
@@ -46,6 +51,7 @@ export const VacancyShort = ({ vacancy, short }: Props) => {
                 </Flex>
                 <Box>
                     <Star
+                        data-elem={`vacancy-${id}-shortlist-button`}
                         fill={favorite ? 'blue' : 'none'}
                         onClick={favorite ? removeFromFavorites : addToFavorites}
                     />

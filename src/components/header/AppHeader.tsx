@@ -19,7 +19,12 @@ export const AppHeader = () => {
                                 </Group>
                             </MediaQuery>
                             <MediaQuery largerThan="sm" styles={{ display: 'none' }}>
-                                <Burger size="md" opened={opened} onClick={opened ? close : open} mr={10}/>
+                                <Burger
+                                    size="md"
+                                    opened={opened}
+                                    onClick={opened ? close : open}
+                                    mr={10}
+                                />
                             </MediaQuery>
                         </Flex>
                     </MediaQuery>
