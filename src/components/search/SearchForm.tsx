@@ -32,7 +32,6 @@ export const SearchForm = () => {
                 <Button
                     data-elem="search-button"
                     size="sm"
-                    radius="md"
                     h={32}
                     right={28}
                     onClick={handleClick}

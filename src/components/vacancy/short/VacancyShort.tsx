@@ -40,10 +40,18 @@ export const VacancyShort = ({ vacancy, short }: Props) => {
             radius={12}
             p={24}
             onClick={short ? openFullInfo : undefined}
+            sx={{
+                cursor: short ? 'pointer' : 'default',
+            }}
         >
             <Flex justify="space-between" gap="xs">
                 <Flex direction="column" gap={short ? 12 : 16}>
-                    <Title order={3} fz={short ? 20 : 28} lh={1.2}>
+                    <Title
+                        order={3}
+                        fz={short ? 20 : 28}
+                        lh={1.2}
+                        color={short ? 'light-blue.4' : 'inherit'}
+                    >
                         {profession}
                     </Title>
                     <Conditions size={short ? 16 : 20} vacancy={vacancy} />
@@ -52,8 +60,14 @@ export const VacancyShort = ({ vacancy, short }: Props) => {
                 <Box>
                     <Star
                         data-elem={`vacancy-${id}-shortlist-button`}
-                        fill={favorite ? 'blue' : 'none'}
+                        fill={favorite ? '#5E96FC' : 'none'}
                         onClick={favorite ? removeFromFavorites : addToFavorites}
+                        style={{ cursor: 'pointer' }}
+                        filter={
+                            favorite
+                                ? 'brightness(0) saturate(100%) invert(52%) sepia(21%) saturate(2673%) hue-rotate(195deg) brightness(104%) contrast(98%)'
+                                : 'none'
+                        }
                     />
                 </Box>
             </Flex>

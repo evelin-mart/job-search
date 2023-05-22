@@ -18,7 +18,7 @@ export const FavoritesPage = () => {
     return list.length ? (
         <Flex direction="column" gap={20} m="auto" maw={773}>
             <VacanciesList vacancies={list} />
-            <Pagination position="center" total={total} value={page} onChange={handleSetPage} />
+            <Pagination position="center" total={total} radius={4} value={page} onChange={handleSetPage} />
         </Flex>
     ) : (
         <NotFound>

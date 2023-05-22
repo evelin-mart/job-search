@@ -3,6 +3,7 @@ import { RootRouter } from '../router';
 import { getVacancies, store } from '../../store';
 import { useEffect } from 'react';
 import { saveFavoritesToLocalStorage } from '../../utils';
+import { ThemeProvider } from '../theme';
 
 export const App = () => {
     useEffect(() => {
@@ -21,7 +22,9 @@ export const App = () => {
 
     return (
         <Provider store={store}>
-            <RootRouter />
+            <ThemeProvider>
+                <RootRouter />
+            </ThemeProvider>
         </Provider>
     );
 };

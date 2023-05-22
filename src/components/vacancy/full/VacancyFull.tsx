@@ -21,7 +21,7 @@ export const VacancyFull = () => {
     return (
         <>
             <VacanciesList vacancies={list} />
-            <Pagination position="center" total={total} value={page} onChange={handleSetPage} />
+            <Pagination position="center" total={total} radius={4} value={page} onChange={handleSetPage} />
         </>
     );
 };

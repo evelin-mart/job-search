@@ -74,9 +74,21 @@ export const Filters = () => {
                             rightSection={<Down />}
                             radius={8}
                             size="md"
-                            styles={{ rightSection: { pointerEvents: 'none' } }}
                             {...form.getInputProps('catalogues')}
                             data={catalogues}
+                            styles={(theme) => ({
+                                rightSection: { pointerEvents: 'none' },
+                                item: {
+                                    '&[data-selected]': {
+                                        '&, &:hover': {
+                                            backgroundColor: theme.colors['light-blue'][4],
+                                        },
+                                    },
+                                    '&[data-hovered]': {
+                                        backgroundColor: theme.colors['light-blue'][0],
+                                    },
+                                },
+                            })}
                         />
                     </Flex>
                     <Flex direction="column" align="stretch" gap={8}>
