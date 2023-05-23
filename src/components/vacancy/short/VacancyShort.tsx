@@ -51,7 +51,7 @@ export const VacancyShort = ({ vacancy, short }: Props) => {
                         order={3}
                         fz={short ? 20 : 28}
                         lh={1.2}
-                        color={short ? 'light-blue.4' : 'inherit'}
+                        color={short ? 'lightblue.4' : 'inherit'}
                     >
                         {profession}
                     </Title>

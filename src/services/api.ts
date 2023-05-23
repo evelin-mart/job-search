@@ -1,6 +1,5 @@
 import axios, { AxiosError, AxiosInstance } from 'axios';
 import { VacancyFull } from '../types';
-import data from './mock.json';
 
 interface RequestOpt {
     [x: string]: string | number;
@@ -81,33 +80,32 @@ export class Loader {
     }
 
     public async getVacancies(options: RequestOpt): Promise<VacancyFull[]> {
-        // try {
-        //     if (!this.accessToken.access_token) {
-        //         await this.auth();
-        //     }
+        try {
+            if (!this.accessToken.access_token) {
+                await this.auth();
+            }
 
-        //     const response = await this.instance.get<ResponseType>(
-        //         this.makeUrl('vacancies', options),
-        //         {
-        //             headers: {
-        //                 'X-Api-App-Id': this.clientOptions.client_secret,
-        //             },
-        //         },
-        //     );
-        //     return response.data.objects;
-        // } catch (e: unknown) {
-        //     if (e instanceof AxiosError) {
-        //         const data = e.response?.data as ErrorData;
-        //         if (data.error.code === 410) {
-        //             await this.refresh();
-        //             return await this.getVacancies(options);
-        //         } else {
-        //             throw new Error(e.response?.data.error.message);
-        //         }
-        //     } else {
-        //         throw new Error((e as Error).message);
-        //     }
-        // }
-        return data.objects as VacancyFull[];
+            const response = await this.instance.get<ResponseType>(
+                this.makeUrl('vacancies', options),
+                {
+                    headers: {
+                        'X-Api-App-Id': this.clientOptions.client_secret,
+                    },
+                },
+            );
+            return response.data.objects;
+        } catch (e: unknown) {
+            if (e instanceof AxiosError) {
+                const data = e.response?.data as ErrorData;
+                if (data.error.code === 410) {
+                    await this.refresh();
+                    return await this.getVacancies(options);
+                } else {
+                    throw new Error(e.response?.data.error.message);
+                }
+            } else {
+                throw new Error((e as Error).message);
+            }
+        }
     }
 }

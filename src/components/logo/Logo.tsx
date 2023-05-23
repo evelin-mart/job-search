@@ -18,7 +18,7 @@ export const Logo = ({ toggleNavbar }: Props) => {
     return (
         <Group onClick={onClick} sx={{ cursor: 'pointer' }}>
             <Union />
-            <Title order={1} fz="1.5rem" lh="2.25rem">
+            <Title order={1} fz="1.5rem" lh="2.25rem" ff="Poppins, sans-serif">
                 Jobored
             </Title>
         </Group>

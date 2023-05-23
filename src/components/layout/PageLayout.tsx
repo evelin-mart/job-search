@@ -1,6 +1,6 @@
 import React from 'react';
 import { AppHeader } from '../header';
-import { Box, Container, Flex } from '@mantine/core';
+import { Box, Container } from '@mantine/core';
 
 type Props = {
     children: React.ReactNode;

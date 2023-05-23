@@ -9,6 +9,7 @@ export const ThemeProvider = ({ children }: Props) => {
     return (
         <MantineProvider
             theme={{
+                fontFamily: 'Inter, sans-serif',
                 defaultRadius: 8,
                 black: '#232134',
                 colors: {
