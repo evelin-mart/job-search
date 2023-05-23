@@ -1,24 +1,15 @@
 import { SearchParamsType } from '../../store/types';
 import { useForm } from '@mantine/form';
-import {
-    Flex,
-    Group,
-    Paper,
-    Title,
-    UnstyledButton,
-    Text,
-    NumberInput,
-    Button,
-    Select,
-} from '@mantine/core';
-import { ReactComponent as Down } from '../../assets/Down.svg';
-import { ReactComponent as Close } from '../../assets/Close.svg';
+import { Flex, Paper, Title, Text, Button } from '@mantine/core';
 import { FormEventHandler, useCallback } from 'react';
 import { getVacancies, useAppDispatch, useAppSelector } from '../../store';
-import { catalogues } from '../../constants';
+import { CatalogueCodes, primaryButtonStyles } from '../../constants';
 import { usePagination } from '../../hooks';
+import { NumberFilter } from './number';
+import { SelectFilter } from './select';
+import { ResetButton } from './reset';
 
-type FormState = Omit<SearchParamsType, 'keyword'>;
+export type FormState = Omit<SearchParamsType, 'keyword' | 'published'>;
 
 const initialValues: Partial<SearchParamsType> = {
     payment_from: '',
@@ -28,7 +19,8 @@ const initialValues: Partial<SearchParamsType> = {
 
 export const Filters = () => {
     const { isLoading, searchParams } = useAppSelector();
-    const form = useForm<FormState>({ initialValues: { ...searchParams } });
+    const { payment_from, payment_to, catalogues } = searchParams;
+    const form = useForm<FormState>({ initialValues: { payment_from, payment_to, catalogues } });
     const dispatch = useAppDispatch();
     const { handleSetPage } = usePagination([]);
     const onSubmit: FormEventHandler<HTMLFormElement> = useCallback(
@@ -40,25 +32,18 @@ export const Filters = () => {
         [dispatch, form.values, handleSetPage],
     );
     const resetFilters = useCallback(() => {
-        form.reset();
+        form.setValues(initialValues);
         dispatch(getVacancies(initialValues));
         handleSetPage(1);
     }, [dispatch, form, handleSetPage]);
 
     return (
-        <Paper p={20} radius={12} sx={{ flex: '0 0 315px' }}>
+        <Paper p={20} radius={12} withBorder sx={{ flex: '0 0 315px' }}>
             <Flex align="center" justify="space-between" pb={32}>
                 <Title order={3} fz={20} lh={1}>
                     Фильтры
                 </Title>
-                <UnstyledButton onClick={resetFilters} type="reset" disabled={isLoading}>
-                    <Group spacing={4} align="flex-end">
-                        <Text fz="sm" lh="20px">
-                            Сбросить все
-                        </Text>
-                        <Close />
-                    </Group>
-                </UnstyledButton>
+                <ResetButton disabled={isLoading} onClick={resetFilters} />
             </Flex>
             <form onSubmit={onSubmit}>
                 <Flex direction="column" align="stretch" gap={20}>
@@ -66,60 +51,37 @@ export const Filters = () => {
                         <Text fz={16} lh={1.2} fw={700}>
                             Отрасль
                         </Text>
-                        <Select
-                            data-elem="industry-select"
+                        <SelectFilter
+                            data="industry-select"
                             placeholder="Выберите отрасль"
-                            allowDeselect
-                            searchable
-                            rightSection={<Down />}
-                            radius={8}
-                            size="md"
-                            {...form.getInputProps('catalogues')}
-                            data={catalogues}
-                            styles={(theme) => ({
-                                rightSection: { pointerEvents: 'none' },
-                                item: {
-                                    '&[data-selected]': {
-                                        '&, &:hover': {
-                                            backgroundColor: theme.colors['light-blue'][4],
-                                        },
-                                    },
-                                    '&[data-hovered]': {
-                                        backgroundColor: theme.colors['light-blue'][0],
-                                    },
-                                },
-                            })}
+                            element="catalogues"
+                            form={form}
+                            list={CatalogueCodes}
                         />
                     </Flex>
                     <Flex direction="column" align="stretch" gap={8}>
                         <Text fz={16} lh={1.2} fw={700}>
                             Оклад
                         </Text>
-                        <NumberInput
-                            data-elem="salary-from-input"
+                        <NumberFilter
+                            data="salary-from-input"
+                            element="payment_from"
+                            form={form}
                             placeholder="От"
-                            min={0}
-                            step={1000}
-                            radius={8}
-                            size="md"
-                            {...form.getInputProps('payment_from')}
                         />
-                        <NumberInput
-                            data-elem="salary-to-input"
+                        <NumberFilter
+                            data="salary-to-input"
+                            element="payment_to"
+                            form={form}
                             placeholder="До"
-                            min={0}
-                            step={1000}
-                            radius={8}
-                            size="md"
-                            {...form.getInputProps('payment_to')}
                         />
                     </Flex>
                     <Button
                         data-elem="search-button"
                         type="submit"
-                        radius={8}
                         size="md"
                         disabled={isLoading}
+                        sx={primaryButtonStyles}
                     >
                         Применить
                     </Button>

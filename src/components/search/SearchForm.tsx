@@ -1,8 +1,22 @@
 import { ReactComponent as Search } from '../../assets/Search.svg';
-import { Button, TextInput } from '@mantine/core';
+import { Button, MantineTheme, TextInput } from '@mantine/core';
 import { getVacancies, useAppDispatch, useAppSelector } from '../../store';
 import { useCallback, useState } from 'react';
 import { usePagination } from '../../hooks';
+import { primaryButtonStyles } from '../../constants';
+
+const styles = (theme: MantineTheme) => ({
+    input: {
+        borderColor: theme.colors.grey[1],
+        borderWidth: 1,
+        '&:focus, &:focus-within': {
+            borderColor: theme.colors.lightblue[4],
+        },
+    },
+    rightSection: {
+        width: 83,
+    },
+});
 
 export const SearchForm = () => {
     const {
@@ -31,16 +45,19 @@ export const SearchForm = () => {
             rightSection={
                 <Button
                     data-elem="search-button"
-                    size="sm"
                     h={32}
-                    right={28}
+                    w={{ base: 63, sm: 83 }}
+                    right={{ base: 0, sm: 12 }}
+                    p="0 8px"
                     onClick={handleClick}
                     disabled={isLoading}
+                    sx={primaryButtonStyles}
                 >
                     Поиск
                 </Button>
             }
             placeholder="Введите название вакансии"
+            styles={styles}
         />
     );
 };

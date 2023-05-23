@@ -12,14 +12,7 @@ export const ThemeProvider = ({ children }: Props) => {
                 defaultRadius: 8,
                 black: '#232134',
                 colors: {
-                    'light-blue': [
-                        '#DEECFF',
-                        '#C9E0FF',
-                        '#B7D6FF',
-                        '#92C1FF',
-                        '#5E96FC',
-                        '#3B7CD3',
-                    ],
+                    lightblue: ['#DEECFF', '#C9E0FF', '#B7D6FF', '#92C1FF', '#5E96FC', '#3B7CD3'],
                     grey: ['#F5F5F6', '#EAEBED', '#D5D6DC', '#ACADB9', '#7B7C88'],
                 },
                 activeStyles: {
@@ -27,12 +20,19 @@ export const ThemeProvider = ({ children }: Props) => {
                 },
                 components: {
                     Button: {
-                        styles: () => ({
+                        styles: (theme) => ({
                             root: {
-                                backgroundColor: '#5E96FC',
+                                backgroundColor: theme.colors.lightblue[4],
                             },
-                            '&:hover': {
-                                backgroundColor: '#92C1FF',
+                        }),
+                    },
+                    Paper: {
+                        styles: (theme) => ({
+                            root: {
+                                '&[data-with-border]': {
+                                    border: '1px solid',
+                                    borderColor: theme.colors.grey[1],
+                                },
                             },
                         }),
                     },

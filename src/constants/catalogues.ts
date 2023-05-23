@@ -1,4 +1,4 @@
-export const catalogues = [
+export const CatalogueCodes = [
     {
         label: 'IT, Интернет, связь, телеком',
         value: '33',

@@ -1,8 +1,9 @@
-import { Pagination, Text } from '@mantine/core';
+import { Text } from '@mantine/core';
 import { VacanciesList } from '../list';
 import { NotFound } from '../../not-found';
 import { useAppSelector } from '../../../store';
 import { usePagination } from '../../../hooks';
+import { StyledPagination } from '../../pagination';
 
 export const VacancyFull = () => {
     const { vacancies } = useAppSelector();
@@ -21,7 +22,7 @@ export const VacancyFull = () => {
     return (
         <>
             <VacanciesList vacancies={list} />
-            <Pagination position="center" total={total} radius={4} value={page} onChange={handleSetPage} />
+            <StyledPagination onChange={handleSetPage} total={total} value={page} />
         </>
     );
 };

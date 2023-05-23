@@ -1,11 +1,11 @@
-import { Box, Flex, Paper, Title } from '@mantine/core';
+import { Flex, Paper, Title } from '@mantine/core';
 import { Conditions } from '../conditions';
 import { Location } from '../location';
 import { Vacancy } from '../../../types';
-import { ReactComponent as Star } from '../../../assets/Star.svg';
 import { useNavigate } from 'react-router';
 import { MouseEventHandler, useCallback } from 'react';
 import { addFavorite, removeFavorite, useAppDispatch } from '../../../store';
+import { StarButton } from '../button';
 
 type Props = {
     vacancy: Vacancy;
@@ -19,14 +19,14 @@ export const VacancyShort = ({ vacancy, short }: Props) => {
     const openFullInfo = useCallback(() => {
         navigate(`/vacancies/${id}`);
     }, [navigate, id]);
-    const addToFavorites: MouseEventHandler<SVGSVGElement> = useCallback(
+    const addToFavorites: MouseEventHandler<HTMLButtonElement> = useCallback(
         (e) => {
             e.stopPropagation();
             dispatch(addFavorite(vacancy));
         },
         [dispatch, vacancy],
     );
-    const removeFromFavorites: MouseEventHandler<SVGSVGElement> = useCallback(
+    const removeFromFavorites: MouseEventHandler<HTMLButtonElement> = useCallback(
         (e) => {
             e.stopPropagation();
             dispatch(removeFavorite(id));
@@ -40,11 +40,12 @@ export const VacancyShort = ({ vacancy, short }: Props) => {
             radius={12}
             p={24}
             onClick={short ? openFullInfo : undefined}
+            withBorder
             sx={{
                 cursor: short ? 'pointer' : 'default',
             }}
         >
-            <Flex justify="space-between" gap="xs">
+            <Flex justify="space-between" align="start" gap="xs">
                 <Flex direction="column" gap={short ? 12 : 16}>
                     <Title
                         order={3}
@@ -57,19 +58,12 @@ export const VacancyShort = ({ vacancy, short }: Props) => {
                     <Conditions size={short ? 16 : 20} vacancy={vacancy} />
                     <Location address={address} />
                 </Flex>
-                <Box>
-                    <Star
-                        data-elem={`vacancy-${id}-shortlist-button`}
-                        fill={favorite ? '#5E96FC' : 'none'}
-                        onClick={favorite ? removeFromFavorites : addToFavorites}
-                        style={{ cursor: 'pointer' }}
-                        filter={
-                            favorite
-                                ? 'brightness(0) saturate(100%) invert(52%) sepia(21%) saturate(2673%) hue-rotate(195deg) brightness(104%) contrast(98%)'
-                                : 'none'
-                        }
-                    />
-                </Box>
+                <StarButton
+                    id={id}
+                    favorite={favorite}
+                    add={addToFavorites}
+                    remove={removeFromFavorites}
+                />
             </Flex>
         </Paper>
     );

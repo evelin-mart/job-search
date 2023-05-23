@@ -14,7 +14,7 @@ export const VacancyPage = () => {
     return (
         <Flex direction="column" gap={20} m="auto" maw={773}>
             <VacancyShort vacancy={vacancy} />
-            <Paper radius={12} p={24}>
+            <Paper radius={12} p={24} withBorder>
                 <Box dangerouslySetInnerHTML={{ __html: vacancy.text }} />
             </Paper>
         </Flex>

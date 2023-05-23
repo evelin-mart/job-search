@@ -1,4 +1,4 @@
-import { Button, Flex, Pagination, Text } from '@mantine/core';
+import { Button, Flex, Text } from '@mantine/core';
 import { useAppSelector } from '../../store';
 import { VacanciesList } from '../../components/vacancy';
 import { usePagination } from '../../hooks';
@@ -6,6 +6,7 @@ import { NotFound } from '../../components/not-found';
 import { useNavigate } from 'react-router';
 import { useCallback } from 'react';
 import { ROUTES } from '../../constants';
+import { StyledPagination } from '../../components/pagination';
 
 export const FavoritesPage = () => {
     const { favorites } = useAppSelector();
@@ -18,7 +19,7 @@ export const FavoritesPage = () => {
     return list.length ? (
         <Flex direction="column" gap={20} m="auto" maw={773}>
             <VacanciesList vacancies={list} />
-            <Pagination position="center" total={total} radius={4} value={page} onChange={handleSetPage} />
+            <StyledPagination onChange={handleSetPage} total={total} value={page} />
         </Flex>
     ) : (
         <NotFound>

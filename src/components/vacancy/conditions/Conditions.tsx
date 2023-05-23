@@ -1,5 +1,6 @@
 import { Group, Text, Box } from '@mantine/core';
 import { Vacancy } from '../../../types';
+import { grey600 } from '../../../constants';
 
 type Props = {
     size: number;
@@ -13,7 +14,7 @@ export const Conditions = ({ size, vacancy }: Props) => {
             <Text fz={size} fw="bold" lh="20px">
                 {pay}
             </Text>
-            <Box sx={{ width: 5, height: 5, borderRadius: '50%', backgroundColor: '#7B7C88' }} />
+            <Box sx={{ width: 5, height: 5, borderRadius: '50%', backgroundColor: grey600 }} />
             <Text fz={size} lh="20px">
                 {type}
             </Text>
